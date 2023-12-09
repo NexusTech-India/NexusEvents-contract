@@ -1,0 +1,27 @@
+type EvntCreated @entity(immutable: true) {
+  id: Bytes!
+  _owner: Bytes! # address
+  _evnt: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type EvntUpdated @entity(immutable: true) {
+  id: Bytes!
+  _owner: Bytes! # address
+  _evnt: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type TicketMinted @entity(immutable: true) {
+  id: Bytes!
+  _owner: Bytes! # address
+  _evnt: Bytes! # address
+  quantity: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}

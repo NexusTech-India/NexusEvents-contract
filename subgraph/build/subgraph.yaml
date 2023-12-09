@@ -1,0 +1,30 @@
+specVersion: 0.0.5
+schema:
+  file: schema.graphql
+dataSources:
+  - kind: ethereum
+    name: Manager
+    network: scroll-sepolia
+    source:
+      address: "0xb950EB5Db19a1d34Eac6Fb3a5c98B0A945F1A94E"
+      abi: Manager
+      startBlock: 2531316
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - EvntCreated
+        - EvntUpdated
+        - TicketMinted
+      abis:
+        - name: Manager
+          file: Manager/abis/Manager.json
+      eventHandlers:
+        - event: EvntCreated(indexed address,address)
+          handler: handleEvntCreated
+        - event: EvntUpdated(indexed address,address)
+          handler: handleEvntUpdated
+        - event: TicketMinted(indexed address,address,uint256)
+          handler: handleTicketMinted
+      file: Manager/Manager.wasm
