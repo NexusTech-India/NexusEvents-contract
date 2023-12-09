@@ -12,25 +12,16 @@ async function main() {
 
   const tickets = async (eventAddr: string) => {
     const eventContract = await ethers.getContractAt("Evnt", eventAddr, deployer)
-    console.log("Minting 1 ticket ")
-    const mintTx = await eventContract.mint(deployer.address, 1)
+    console.log("Minting 5 tickets ")
+    const mintTx = await eventContract.mint(deployer.address, 5)
     await mintTx.wait()
-    console.log("Ticket minted")
-
-    console.log("Bulk Minting 5 tickets for the Event")
-    const bulkMintTx = await eventContract.bulkMint(deployer.address, 5)
-    await bulkMintTx.wait()
     console.log("Tickets minted")
 
     //Putting the tickets for sale
-    console.log("Putting the 1+3 tickets for sale")
+    console.log("Putting the 3 tickets for sale")
     const marketplace = await ethers.getContractAt("Marketplace", await eventsManager.marketplace(), deployer)
 
-    const purOneTx = await marketplace.listItem(eventAddr, 1, 100);
-    await purOneTx.wait()
-    console.log("Ticket 1 is put for sale at price: 100")
-
-    const putForSaleTx = await marketplace.listBulkItems(eventAddr, [4, 2, 3], 100)
+    const putForSaleTx = await marketplace.listBulkItems(eventAddr, [1, 2, 3], 100)
     await putForSaleTx.wait()
     console.log("3 Tickets are put for sale at price: 100")
   }
@@ -42,6 +33,7 @@ async function main() {
   })
 
   //Create a new event
+  console.log("Creating a new event")
   const createEventTx = await eventsManager.createEvnt(
     "ETH India 2023",
     "ETH",
@@ -51,6 +43,7 @@ async function main() {
     new Date("2023-12-10").getTime(),
   )
   await createEventTx.wait()
+  console.log("Event created")
 }
 
 main().catch((error) => {
