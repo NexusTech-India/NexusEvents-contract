@@ -98,6 +98,21 @@
         "internalType": "uint256",
         "name": "_endDate",
         "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_age",
+        "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "_country",
+        "type": "string"
+      },
+      {
+        "internalType": "bool",
+        "name": "_codingExp",
+        "type": "bool"
       }
     ],
     "name": "createEvnt",
@@ -165,8 +180,23 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "_event",
+        "name": "_evnt",
         "type": "address"
+      },
+      {
+        "internalType": "string",
+        "name": "_description",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_logo",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_startDate",
+        "type": "uint256"
       },
       {
         "internalType": "uint256",
@@ -174,25 +204,7 @@
         "type": "uint256"
       }
     ],
-    "name": "setEventEndDate",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_event",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_startDate",
-        "type": "uint256"
-      }
-    ],
-    "name": "setEvntStartDate",
+    "name": "setDetails",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
