@@ -24,6 +24,16 @@ export function handleEvntCreated(event: EvntCreatedEvent): void {
 
 export function handleTicketMinted(event: TicketMintedEvent): void {
   let ev = Event.load(event.params._evnt)!
+  let ticket = Ticket.load(event.params._evnt.toHexString() + "-" + event.params._ticketId.toString())
+
+  if (!ticket) ticket = new Ticket(event.params._evnt.toHexString() + "-" + event.params._ticketId.toString())
+
+  ticket.owner = ev.organizer;
+  ticket.nftAddress = event.params._evnt;
+  ticket.tokenId = event.params._ticketId;
+  ticket.event = ev.id;
+  ticket.state = "NotForSale"
+  ticket.save()
 }
 
 export function handleEvntUpdated(event: EvntUpdatedEvent): void {

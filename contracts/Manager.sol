@@ -13,7 +13,7 @@ contract Manager {
     event TicketMinted(
         address indexed _owner,
         address _evnt,
-        uint256 quantity
+        uint256 _ticketId
     );
 
     constructor() {
@@ -65,8 +65,8 @@ contract Manager {
         _;
     }
 
-    function mintTicket(address _to, uint256 quantity) public onlyEvnt {
-        emit TicketMinted(_to, msg.sender, quantity);
+    function mintTicket(address _to, uint256 _ticketId) public onlyEvnt {
+        emit TicketMinted(_to, msg.sender, _ticketId);
     }
 
     function updateEvnt(address orgOwner) public onlyEvnt {

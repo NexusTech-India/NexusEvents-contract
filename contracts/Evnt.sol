@@ -61,8 +61,11 @@ contract Evnt is ERC721A {
         manager.updateEvnt(evntOrganizer);
     }
 
-    function mint(address _to, uint256 quantity) public onlyEvntOrganizer {
-        _mint(_to, quantity);
-        manager.mintTicket(_to, quantity);
+    function mint(address _to, uint256 _ticketId) public onlyEvntOrganizer {
+        _mint(_to, _ticketId);
+
+        for(uint256 i = 0; i < _ticketId; i++) {
+            manager.mintTicket(_to, (totalSupply() - 1 - i));
+        }
     }
 }
