@@ -1,6 +1,7 @@
 import { HardhatUserConfig } from "hardhat/config";
 import { config as dotConfig } from "dotenv"
 import "@nomicfoundation/hardhat-toolbox";
+import "hardhat-gas-reporter"
 dotConfig()
 
 const config: HardhatUserConfig = {
@@ -16,6 +17,9 @@ const config: HardhatUserConfig = {
       accounts:
         process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
     },
+  },
+  gasReporter: {
+    enabled: true
   },
   etherscan: {
     apiKey: {

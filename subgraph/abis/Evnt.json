@@ -40,6 +40,21 @@
                 "internalType": "uint256",
                 "name": "_endDate",
                 "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "_age",
+                "type": "uint256"
+            },
+            {
+                "internalType": "string",
+                "name": "_country",
+                "type": "string"
+            },
+            {
+                "internalType": "bool",
+                "name": "_codingExp",
+                "type": "bool"
             }
         ],
         "stateMutability": "nonpayable",
@@ -186,6 +201,19 @@
         "type": "event"
     },
     {
+        "inputs": [],
+        "name": "admin",
+        "outputs": [
+            {
+                "internalType": "address",
+                "name": "",
+                "type": "address"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
         "inputs": [
             {
                 "internalType": "address",
@@ -318,6 +346,25 @@
         "type": "function"
     },
     {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "_user",
+                "type": "address"
+            }
+        ],
+        "name": "isEligible",
+        "outputs": [
+            {
+                "internalType": "bool",
+                "name": "",
+                "type": "bool"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
         "inputs": [],
         "name": "logo",
         "outputs": [
@@ -388,6 +435,29 @@
                 "internalType": "address",
                 "name": "",
                 "type": "address"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "requirements",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "age",
+                "type": "uint256"
+            },
+            {
+                "internalType": "string",
+                "name": "country",
+                "type": "string"
+            },
+            {
+                "internalType": "bool",
+                "name": "codingExp",
+                "type": "bool"
             }
         ],
         "stateMutability": "view",
@@ -468,35 +538,24 @@
                 "internalType": "string",
                 "name": "_description",
                 "type": "string"
-            }
-        ],
-        "name": "setDescription",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
+            },
+            {
+                "internalType": "string",
+                "name": "_logo",
+                "type": "string"
+            },
+            {
+                "internalType": "uint256",
+                "name": "_startDate",
+                "type": "uint256"
+            },
             {
                 "internalType": "uint256",
                 "name": "_endDate",
                 "type": "uint256"
             }
         ],
-        "name": "setEndDate",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "string",
-                "name": "_logo",
-                "type": "string"
-            }
-        ],
-        "name": "setLogo",
+        "name": "setDetails",
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"
@@ -505,11 +564,49 @@
         "inputs": [
             {
                 "internalType": "uint256",
-                "name": "_startDate",
+                "name": "_age",
                 "type": "uint256"
+            },
+            {
+                "internalType": "string",
+                "name": "_country",
+                "type": "string"
+            },
+            {
+                "internalType": "bool",
+                "name": "_codingExp",
+                "type": "bool"
             }
         ],
-        "name": "setStartDate",
+        "name": "setRequirements",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "_user",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "_age",
+                "type": "uint256"
+            },
+            {
+                "internalType": "string",
+                "name": "_country",
+                "type": "string"
+            },
+            {
+                "internalType": "bool",
+                "name": "_codingExp",
+                "type": "bool"
+            }
+        ],
+        "name": "setUserRequirements",
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"

@@ -55,12 +55,23 @@ contract Manager {
         return evnts[_event];
     }
 
-    function setEvntStartDate(address _event, uint256 _startDate) public {
-        evnts[_event].setStartDate(_startDate);
-    }
-
-    function setEventEndDate(address _event, uint256 _endDate) public {
-        evnts[_event].setEndDate(_endDate);
+    function setDetails(
+        address _evnt,
+        string memory _description,
+        string memory _logo,
+        uint256 _startDate,
+        uint256 _endDate
+    ) public {
+        require(
+            msg.sender == address(evnts[_evnt]),
+            "Only evnt can call this function"
+        );
+        evnts[_evnt].setDetails(
+            _description,
+            _logo,
+            _startDate,
+            _endDate
+        );
     }
 
     modifier onlyEvnt() {
