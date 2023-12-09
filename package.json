@@ -1,7 +1,7 @@
 {
   "scripts": {
     "test": "hardhat run scripts/deploy.ts --network hardhat",
-    "dev": "hardhat run scripts/deploy.ts --network mumbai",
+    "mumbai": "hardhat run scripts/deploy.ts --network mumbai",
     "deploy": "hardhat run scripts/deploy.ts --network scrollSepolia",
     "compile": "hardhat compile"
   },
@@ -26,6 +26,7 @@
     "typescript": ">=4.5.0"
   },
   "dependencies": {
+    "@openzeppelin/contracts": "^5.0.1",
     "@thirdweb-dev/contracts": "^3.10.4",
     "dotenv": "^16.3.1"
   }
