@@ -18,7 +18,7 @@ contract EvntsManager {
         uint256 _endDate
     ) public returns (address) {
         Evnt newEvnt = new Evnt(
-//            address(this),
+            address(this),
             _name,
             _symbol,
             _description,
