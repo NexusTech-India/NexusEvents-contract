@@ -41,6 +41,9 @@ async function main() {
     "QmeBSHYuYf6JBymaxrsTW5ZjesSrLECtifX9sW8X3KgFmD",
     new Date("2023-12-08").getTime(),
     new Date("2023-12-10").getTime(),
+    1,
+    "India",
+    true
   )
   await createEventTx.wait()
   console.log("Event created")

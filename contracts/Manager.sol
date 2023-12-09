@@ -26,7 +26,10 @@ contract Manager {
         string memory _description,
         string memory _logo,
         uint256 _startDate,
-        uint256 _endDate
+        uint256 _endDate,
+        uint256 _age,
+        string memory _country,
+        bool _codingExp
     ) public returns (address) {
         Evnt newEvnt = new Evnt(
             address(this),
@@ -36,7 +39,10 @@ contract Manager {
             _logo,
             msg.sender,
             _startDate,
-            _endDate
+            _endDate,
+            _age,
+            _country,
+            _codingExp
         );
         evnts[address(newEvnt)] = newEvnt;
 
