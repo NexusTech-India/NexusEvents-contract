@@ -1,27 +1,30 @@
-type EvntCreated @entity(immutable: true) {
+type Event @entity(immutable: false) {
   id: Bytes!
-  _owner: Bytes! # address
-  _evnt: Bytes! # address
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
+  organizer: Bytes! # address
+  name: String!
+  description: String!
+  logo: String!
+  startDate: BigInt! # uint256
+  endDate: BigInt! # uint256
+  totalTickets: BigInt! # uint256
+  evnt: Bytes! # address
+  createdAt: BigInt! # uint256
+  tickets: [Ticket!]! @derivedFrom(field: "event")
 }
 
-type EvntUpdated @entity(immutable: true) {
-  id: Bytes!
-  _owner: Bytes! # address
-  _evnt: Bytes! # address
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
+enum TicketState {
+  Available
+  Sold
+  NotForSale
 }
 
-type TicketMinted @entity(immutable: true) {
-  id: Bytes!
-  _owner: Bytes! # address
-  _evnt: Bytes! # address
-  quantity: BigInt! # uint256
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
+type Ticket @entity(immutable: false) {
+  id: String!
+  seller: Bytes # address
+  owner: Bytes! # address
+  nftAddress: Bytes! # address
+  tokenId: BigInt! # uint256
+  price: BigInt # uint256
+  event: Event!
+  state: TicketState!
 }

@@ -60,7 +60,7 @@
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "quantity",
+        "name": "_ticketId",
         "type": "uint256"
       }
     ],
@@ -152,7 +152,7 @@
       },
       {
         "internalType": "uint256",
-        "name": "quantity",
+        "name": "_ticketId",
         "type": "uint256"
       }
     ],

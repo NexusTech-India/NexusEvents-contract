@@ -6,7 +6,7 @@ dataSources:
     name: Manager
     network: scroll-sepolia
     source:
-      address: "0xb950EB5Db19a1d34Eac6Fb3a5c98B0A945F1A94E"
+      address: "0x1abaBd5d56f975f45684ca60b96ff4AAB0247510"
       abi: Manager
       startBlock: 2531316
     mapping:
@@ -20,6 +20,8 @@ dataSources:
       abis:
         - name: Manager
           file: Manager/abis/Manager.json
+        - name: Evnt
+          file: Manager/abis/Evnt.json
       eventHandlers:
         - event: EvntCreated(indexed address,address)
           handler: handleEvntCreated
@@ -28,3 +30,29 @@ dataSources:
         - event: TicketMinted(indexed address,address,uint256)
           handler: handleTicketMinted
       file: Manager/Manager.wasm
+  - kind: ethereum
+    name: Marketplace
+    network: scroll-sepolia
+    source:
+      address: "0x38201F808b7822D1c9EbB05C9218A28c29177C98"
+      abi: Marketplace
+      startBlock: 2531316
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - ItemBought
+        - ItemCanceled
+        - ItemListed
+      abis:
+        - name: Marketplace
+          file: Marketplace/abis/Marketplace.json
+      eventHandlers:
+        - event: ItemBought(indexed address,indexed address,indexed uint256,uint256)
+          handler: handleItemBought
+        - event: ItemCanceled(indexed address,indexed address,indexed uint256)
+          handler: handleItemCanceled
+        - event: ItemListed(indexed address,indexed address,indexed uint256,uint256)
+          handler: handleItemListed
+      file: Marketplace/Marketplace.wasm

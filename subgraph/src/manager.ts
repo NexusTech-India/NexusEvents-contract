@@ -38,7 +38,7 @@ export function handleTicketMinted(event: TicketMintedEvent): void {
 
 export function handleEvntUpdated(event: EvntUpdatedEvent): void {
   let entity = Event.load(event.params._evnt)
-  if(!entity) entity = new Event(event.params._evnt)
+  if (!entity) entity = new Event(event.params._evnt)
 
   const contract = Evnt.bind(event.params._evnt)
   entity.name = contract.name()
