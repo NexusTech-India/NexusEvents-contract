@@ -67,9 +67,9 @@ contract Evnt is ERC721A {
     }
 
     function bulkMint(address to, uint256 quantity) public onlyEvntOrganizer {
-        for (uint256 i = 0; i < quantity; i++) {
+        for (uint256 i = 1; i <= quantity; i++) {
             manager.mintTicket(to, i);
-            _mint(to, totalSupply());
+            _mint(to, totalSupply()+1);
         }
     }
 }
