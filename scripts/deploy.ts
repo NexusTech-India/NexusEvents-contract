@@ -2,50 +2,57 @@ import { ethers } from "hardhat";
 
 async function main() {
   const [deployer] = await ethers.getSigners();
-  console.log("Deploying contracts with the account:", deployer.address);
-  
-  const Manager = await ethers.getContractFactory("Manager");
-  const manager = await Manager.deploy();
-  await manager.waitForDeployment();
-  console.log("Manager address:", await manager.getAddress());
-  console.log("Marketplace address:", await manager.marketplace());
+  const EventsManager = await ethers.getContractFactory("Manager", deployer);
+  const eventsManager = await EventsManager.deploy();
+  await eventsManager.waitForDeployment();
+
+  console.log("Deploying contracts with the account: ", deployer.address);
+  console.log("EventsManager deployed to: ", await eventsManager.getAddress());
+  console.log("Marketplace   deployed to: ", await eventsManager.marketplace());
+
+  const tickets = async (eventAddr: string) => {
+    const eventContract = await ethers.getContractAt("Evnt", eventAddr, deployer)
+    console.log("Minting 1 ticket ")
+    const mintTx = await eventContract.mint(deployer.address, 1)
+    await mintTx.wait()
+    console.log("Ticket minted")
+
+    console.log("Bulk Minting 5 tickets for the Event")
+    const bulkMintTx = await eventContract.bulkMint(deployer.address, 5)
+    await bulkMintTx.wait()
+    console.log("Tickets minted")
+
+    //Putting the tickets for sale
+    console.log("Putting the 1+3 tickets for sale")
+    const marketplace = await ethers.getContractAt("Marketplace", await eventsManager.marketplace(), deployer)
+
+    const purOneTx = await marketplace.listItem(eventAddr, 1, 100);
+    await purOneTx.wait()
+    console.log("Ticket 1 is put for sale at price: 100")
+
+    const putForSaleTx = await marketplace.listBulkItems(eventAddr, [4, 2, 3], 100)
+    await putForSaleTx.wait()
+    console.log("3 Tickets are put for sale at price: 100")
+  }
 
   //@ts-ignore
-  manager.once("EvntCreated", async (owner, _event) => {
-    console.log("Event created by:", owner);
-    console.log("Event address:", _event);
-
-    const event = await ethers.getContractAt("Evnt", _event, deployer)
-
-    //Mint 5 tickets
-    console.log("Minting 5 tickets");
-    await event.bulkMint(deployer.address, 5);
-    console.log("Tickets minted");
-
-    const marketplace = await ethers.getContractAt("Marketplace", await manager.marketplace(), deployer)
-
-    //Create a new listing of 2 tickets for 0.0000001 ETH
-    console.log("Creating a new listing");
-    await marketplace.listBulkItems(_event, [1,2], 100000000);
-    console.log("Listing created");
+  eventsManager.once("EvntCreated", (owner: string, event: string) => {
+    console.log("Event address: ", event)
+    tickets(event)
   })
 
-  //Create a new Event
-  console.log("Creating a new Event");
-  let creatingEvent = await manager.createEvnt(
-    "Event 1",
-    "EVE",
-    "Event 1 description. ",
-    "https://ipfs.io/ipfs/QmUQJ1H7Z9pZLXo7y7X7hQ7e3Y3m6m7Zx8B7m9w8Y5k2Y1",
+  //Create a new event
+  const createEventTx = await eventsManager.createEvnt(
+    "ETH India 2023",
+    "ETH",
+    "ETH India 2023 is a hackathon for developers, designers, and entrepreneurs to learn, build and teach the Ethereum community about the applications of Ethereum to India's social and economic problems.",
+    "QmeBSHYuYf6JBymaxrsTW5ZjesSrLECtifX9sW8X3KgFmD",
+    new Date("2023-12-08").getTime(),
     new Date("2023-12-10").getTime(),
-    new Date("2023-12-12").getTime(),
   )
-  await creatingEvent.wait();
-  console.log("Event created");
+  await createEventTx.wait()
 }
 
-// We recommend this pattern to be able to use async/await everywhere
-// and properly handle errors.
 main().catch((error) => {
   console.error(error);
   process.exitCode = 1;
