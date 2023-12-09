@@ -1,9 +1,3 @@
-enum Age {
-  Above18
-  Below18
-  None
-}
-
 type Event @entity(immutable: false) {
   id: Bytes!
   organizer: Bytes! # address
@@ -16,9 +10,6 @@ type Event @entity(immutable: false) {
   evnt: Bytes! # address
   createdAt: BigInt! # uint256
   tickets: [Ticket!]! @derivedFrom(field: "event")
-
-  isCoder: Boolean!
-  age: Age!
 }
 
 enum TicketState {
