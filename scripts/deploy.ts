@@ -1,10 +1,15 @@
 import { ethers } from "hardhat";
 
 async function main() {
+  console.log("Deploying contracts...");
   const [deployer] = await ethers.getSigners();
+  console.log("delpoyer")
   const EventsManager = await ethers.getContractFactory("Manager", deployer);
+  console.log("got EventManager")
   const eventsManager = await EventsManager.deploy();
+  console.log("Did deploy()")
   await eventsManager.waitForDeployment();
+  console.log("Did waitForDeployment()")
 
   console.log("Deploying contracts with the account: ", deployer.address);
   console.log("EventsManager deployed to: ", await eventsManager.getAddress());
@@ -13,7 +18,7 @@ async function main() {
   const tickets = async (eventAddr: string) => {
     const eventContract = await ethers.getContractAt("Evnt", eventAddr, deployer)
     console.log("Minting 5 tickets ")
-    const mintTx = await eventContract.mint(deployer.address, 5)
+    const mintTx = await eventContract.mint(deployer.address, 2)
     await mintTx.wait()
     console.log("Tickets minted")
 
@@ -21,9 +26,9 @@ async function main() {
     console.log("Putting the 3 tickets for sale")
     const marketplace = await ethers.getContractAt("Marketplace", await eventsManager.marketplace(), deployer)
 
-    const putForSaleTx = await marketplace.listBulkItems(eventAddr, [1, 2, 3], 100)
+    const putForSaleTx = await marketplace.listBulkItems(eventAddr, [1], 100)
     await putForSaleTx.wait()
-    console.log("3 Tickets are put for sale at price: 100")
+    console.log("1 Tickets are put for sale at price: 100")
   }
 
   //@ts-ignore

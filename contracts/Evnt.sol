@@ -58,25 +58,16 @@ contract Evnt is ERC721A {
         _;
     }
 
-    function setStartDate(uint256 _startDate) public onlyEvntOrganizer {
-        startDate = _startDate;
-        manager.updateEvnt(evntOrganizer);
-    }
-
-    function setEndDate(uint256 _endDate) public onlyEvntOrganizer {
-        endDate = _endDate;
-        manager.updateEvnt(evntOrganizer);
-    }
-
-    function setDescription(
-        string memory _description
+    function setDetails(
+        string memory _description,
+        string memory _logo,
+        uint256 _startDate,
+        uint256 _endDate
     ) public onlyEvntOrganizer {
         description = _description;
-        manager.updateEvnt(evntOrganizer);
-    }
-
-    function setLogo(string memory _logo) public onlyEvntOrganizer {
         logo = _logo;
+        startDate = _startDate;
+        endDate = _endDate;
         manager.updateEvnt(evntOrganizer);
     }
 
@@ -88,20 +79,16 @@ contract Evnt is ERC721A {
         }
     }
 
-    function setAgeRequirement(uint256 _age) public onlyEvntOrganizer {
-        requirements.age = _age;
-        manager.updateEvnt(evntOrganizer);
-    }
-
-    function setCountryRequirement(
-        string memory _country
+    function setRequirements(
+        uint256 _age,
+        string memory _country,
+        bool _codingExp
     ) public onlyEvntOrganizer {
-        requirements.country = _country;
-        manager.updateEvnt(evntOrganizer);
-    }
-
-    function setCodingExpRequirement(bool _codingExp) public onlyEvntOrganizer {
-        requirements.codingExp = _codingExp;
+        requirements = Requirements({
+            age: _age,
+            country: _country,
+            codingExp: _codingExp
+        });
         manager.updateEvnt(evntOrganizer);
     }
 
