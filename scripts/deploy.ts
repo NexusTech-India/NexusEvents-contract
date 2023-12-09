@@ -24,9 +24,9 @@ async function main() {
 
     const marketplace = await ethers.getContractAt("Marketplace", await manager.marketplace(), deployer)
 
-    //Create a new listing of 5 tickets for 0.0000001 ETH
+    //Create a new listing of 2 tickets for 0.0000001 ETH
     console.log("Creating a new listing");
-    await marketplace.listBulkItems(_event, [1,2,3,4,5], 100000000);
+    await marketplace.listBulkItems(_event, [1,2], 100000000);
     console.log("Listing created");
   })
 
