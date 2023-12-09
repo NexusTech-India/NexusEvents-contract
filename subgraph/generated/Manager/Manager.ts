@@ -91,18 +91,24 @@ export class Manager extends ethereum.SmartContract {
     _description: string,
     _logo: string,
     _startDate: BigInt,
-    _endDate: BigInt
+    _endDate: BigInt,
+    _age: BigInt,
+    _country: string,
+    _codingExp: boolean
   ): Address {
     let result = super.call(
       "createEvnt",
-      "createEvnt(string,string,string,string,uint256,uint256):(address)",
+      "createEvnt(string,string,string,string,uint256,uint256,uint256,string,bool):(address)",
       [
         ethereum.Value.fromString(_name),
         ethereum.Value.fromString(_symbol),
         ethereum.Value.fromString(_description),
         ethereum.Value.fromString(_logo),
         ethereum.Value.fromUnsignedBigInt(_startDate),
-        ethereum.Value.fromUnsignedBigInt(_endDate)
+        ethereum.Value.fromUnsignedBigInt(_endDate),
+        ethereum.Value.fromUnsignedBigInt(_age),
+        ethereum.Value.fromString(_country),
+        ethereum.Value.fromBoolean(_codingExp)
       ]
     );
 
@@ -115,18 +121,24 @@ export class Manager extends ethereum.SmartContract {
     _description: string,
     _logo: string,
     _startDate: BigInt,
-    _endDate: BigInt
+    _endDate: BigInt,
+    _age: BigInt,
+    _country: string,
+    _codingExp: boolean
   ): ethereum.CallResult<Address> {
     let result = super.tryCall(
       "createEvnt",
-      "createEvnt(string,string,string,string,uint256,uint256):(address)",
+      "createEvnt(string,string,string,string,uint256,uint256,uint256,string,bool):(address)",
       [
         ethereum.Value.fromString(_name),
         ethereum.Value.fromString(_symbol),
         ethereum.Value.fromString(_description),
         ethereum.Value.fromString(_logo),
         ethereum.Value.fromUnsignedBigInt(_startDate),
-        ethereum.Value.fromUnsignedBigInt(_endDate)
+        ethereum.Value.fromUnsignedBigInt(_endDate),
+        ethereum.Value.fromUnsignedBigInt(_age),
+        ethereum.Value.fromString(_country),
+        ethereum.Value.fromBoolean(_codingExp)
       ]
     );
     if (result.reverted) {
@@ -237,6 +249,18 @@ export class CreateEvntCall__Inputs {
   get _endDate(): BigInt {
     return this._call.inputValues[5].value.toBigInt();
   }
+
+  get _age(): BigInt {
+    return this._call.inputValues[6].value.toBigInt();
+  }
+
+  get _country(): string {
+    return this._call.inputValues[7].value.toString();
+  }
+
+  get _codingExp(): boolean {
+    return this._call.inputValues[8].value.toBoolean();
+  }
 }
 
 export class CreateEvntCall__Outputs {
@@ -285,70 +309,48 @@ export class MintTicketCall__Outputs {
   }
 }
 
-export class SetEventEndDateCall extends ethereum.Call {
-  get inputs(): SetEventEndDateCall__Inputs {
-    return new SetEventEndDateCall__Inputs(this);
+export class SetDetailsCall extends ethereum.Call {
+  get inputs(): SetDetailsCall__Inputs {
+    return new SetDetailsCall__Inputs(this);
   }
 
-  get outputs(): SetEventEndDateCall__Outputs {
-    return new SetEventEndDateCall__Outputs(this);
+  get outputs(): SetDetailsCall__Outputs {
+    return new SetDetailsCall__Outputs(this);
   }
 }
 
-export class SetEventEndDateCall__Inputs {
-  _call: SetEventEndDateCall;
+export class SetDetailsCall__Inputs {
+  _call: SetDetailsCall;
 
-  constructor(call: SetEventEndDateCall) {
+  constructor(call: SetDetailsCall) {
     this._call = call;
   }
 
-  get _event(): Address {
+  get _evnt(): Address {
     return this._call.inputValues[0].value.toAddress();
   }
 
-  get _endDate(): BigInt {
-    return this._call.inputValues[1].value.toBigInt();
-  }
-}
-
-export class SetEventEndDateCall__Outputs {
-  _call: SetEventEndDateCall;
-
-  constructor(call: SetEventEndDateCall) {
-    this._call = call;
-  }
-}
-
-export class SetEvntStartDateCall extends ethereum.Call {
-  get inputs(): SetEvntStartDateCall__Inputs {
-    return new SetEvntStartDateCall__Inputs(this);
+  get _description(): string {
+    return this._call.inputValues[1].value.toString();
   }
 
-  get outputs(): SetEvntStartDateCall__Outputs {
-    return new SetEvntStartDateCall__Outputs(this);
-  }
-}
-
-export class SetEvntStartDateCall__Inputs {
-  _call: SetEvntStartDateCall;
-
-  constructor(call: SetEvntStartDateCall) {
-    this._call = call;
-  }
-
-  get _event(): Address {
-    return this._call.inputValues[0].value.toAddress();
+  get _logo(): string {
+    return this._call.inputValues[2].value.toString();
   }
 
   get _startDate(): BigInt {
-    return this._call.inputValues[1].value.toBigInt();
+    return this._call.inputValues[3].value.toBigInt();
+  }
+
+  get _endDate(): BigInt {
+    return this._call.inputValues[4].value.toBigInt();
   }
 }
 
-export class SetEvntStartDateCall__Outputs {
-  _call: SetEvntStartDateCall;
+export class SetDetailsCall__Outputs {
+  _call: SetDetailsCall;
 
-  constructor(call: SetEvntStartDateCall) {
+  constructor(call: SetDetailsCall) {
     this._call = call;
   }
 }

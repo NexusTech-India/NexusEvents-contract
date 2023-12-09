@@ -88,9 +88,56 @@ export class Transfer__Params {
   }
 }
 
+export class Evnt__requirementsResult {
+  value0: BigInt;
+  value1: string;
+  value2: boolean;
+
+  constructor(value0: BigInt, value1: string, value2: boolean) {
+    this.value0 = value0;
+    this.value1 = value1;
+    this.value2 = value2;
+  }
+
+  toMap(): TypedMap<string, ethereum.Value> {
+    let map = new TypedMap<string, ethereum.Value>();
+    map.set("value0", ethereum.Value.fromUnsignedBigInt(this.value0));
+    map.set("value1", ethereum.Value.fromString(this.value1));
+    map.set("value2", ethereum.Value.fromBoolean(this.value2));
+    return map;
+  }
+
+  getAge(): BigInt {
+    return this.value0;
+  }
+
+  getCountry(): string {
+    return this.value1;
+  }
+
+  getCodingExp(): boolean {
+    return this.value2;
+  }
+}
+
 export class Evnt extends ethereum.SmartContract {
   static bind(address: Address): Evnt {
     return new Evnt("Evnt", address);
+  }
+
+  admin(): Address {
+    let result = super.call("admin", "admin():(address)", []);
+
+    return result[0].toAddress();
+  }
+
+  try_admin(): ethereum.CallResult<Address> {
+    let result = super.tryCall("admin", "admin():(address)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toAddress());
   }
 
   balanceOf(owner: Address): BigInt {
@@ -223,6 +270,25 @@ export class Evnt extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBoolean());
   }
 
+  isEligible(_user: Address): boolean {
+    let result = super.call("isEligible", "isEligible(address):(bool)", [
+      ethereum.Value.fromAddress(_user)
+    ]);
+
+    return result[0].toBoolean();
+  }
+
+  try_isEligible(_user: Address): ethereum.CallResult<boolean> {
+    let result = super.tryCall("isEligible", "isEligible(address):(bool)", [
+      ethereum.Value.fromAddress(_user)
+    ]);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBoolean());
+  }
+
   logo(): string {
     let result = super.call("logo", "logo():(string)", []);
 
@@ -285,6 +351,39 @@ export class Evnt extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(value[0].toAddress());
+  }
+
+  requirements(): Evnt__requirementsResult {
+    let result = super.call(
+      "requirements",
+      "requirements():(uint256,string,bool)",
+      []
+    );
+
+    return new Evnt__requirementsResult(
+      result[0].toBigInt(),
+      result[1].toString(),
+      result[2].toBoolean()
+    );
+  }
+
+  try_requirements(): ethereum.CallResult<Evnt__requirementsResult> {
+    let result = super.tryCall(
+      "requirements",
+      "requirements():(uint256,string,bool)",
+      []
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(
+      new Evnt__requirementsResult(
+        value[0].toBigInt(),
+        value[1].toString(),
+        value[2].toBoolean()
+      )
+    );
   }
 
   startDate(): BigInt {
@@ -422,6 +521,18 @@ export class ConstructorCall__Inputs {
 
   get _endDate(): BigInt {
     return this._call.inputValues[7].value.toBigInt();
+  }
+
+  get _age(): BigInt {
+    return this._call.inputValues[8].value.toBigInt();
+  }
+
+  get _country(): string {
+    return this._call.inputValues[9].value.toString();
+  }
+
+  get _codingExp(): boolean {
+    return this._call.inputValues[10].value.toBoolean();
   }
 }
 
@@ -615,122 +726,124 @@ export class SetApprovalForAllCall__Outputs {
   }
 }
 
-export class SetDescriptionCall extends ethereum.Call {
-  get inputs(): SetDescriptionCall__Inputs {
-    return new SetDescriptionCall__Inputs(this);
+export class SetDetailsCall extends ethereum.Call {
+  get inputs(): SetDetailsCall__Inputs {
+    return new SetDetailsCall__Inputs(this);
   }
 
-  get outputs(): SetDescriptionCall__Outputs {
-    return new SetDescriptionCall__Outputs(this);
+  get outputs(): SetDetailsCall__Outputs {
+    return new SetDetailsCall__Outputs(this);
   }
 }
 
-export class SetDescriptionCall__Inputs {
-  _call: SetDescriptionCall;
+export class SetDetailsCall__Inputs {
+  _call: SetDetailsCall;
 
-  constructor(call: SetDescriptionCall) {
+  constructor(call: SetDetailsCall) {
     this._call = call;
   }
 
   get _description(): string {
     return this._call.inputValues[0].value.toString();
   }
-}
-
-export class SetDescriptionCall__Outputs {
-  _call: SetDescriptionCall;
-
-  constructor(call: SetDescriptionCall) {
-    this._call = call;
-  }
-}
-
-export class SetEndDateCall extends ethereum.Call {
-  get inputs(): SetEndDateCall__Inputs {
-    return new SetEndDateCall__Inputs(this);
-  }
-
-  get outputs(): SetEndDateCall__Outputs {
-    return new SetEndDateCall__Outputs(this);
-  }
-}
-
-export class SetEndDateCall__Inputs {
-  _call: SetEndDateCall;
-
-  constructor(call: SetEndDateCall) {
-    this._call = call;
-  }
-
-  get _endDate(): BigInt {
-    return this._call.inputValues[0].value.toBigInt();
-  }
-}
-
-export class SetEndDateCall__Outputs {
-  _call: SetEndDateCall;
-
-  constructor(call: SetEndDateCall) {
-    this._call = call;
-  }
-}
-
-export class SetLogoCall extends ethereum.Call {
-  get inputs(): SetLogoCall__Inputs {
-    return new SetLogoCall__Inputs(this);
-  }
-
-  get outputs(): SetLogoCall__Outputs {
-    return new SetLogoCall__Outputs(this);
-  }
-}
-
-export class SetLogoCall__Inputs {
-  _call: SetLogoCall;
-
-  constructor(call: SetLogoCall) {
-    this._call = call;
-  }
 
   get _logo(): string {
-    return this._call.inputValues[0].value.toString();
-  }
-}
-
-export class SetLogoCall__Outputs {
-  _call: SetLogoCall;
-
-  constructor(call: SetLogoCall) {
-    this._call = call;
-  }
-}
-
-export class SetStartDateCall extends ethereum.Call {
-  get inputs(): SetStartDateCall__Inputs {
-    return new SetStartDateCall__Inputs(this);
-  }
-
-  get outputs(): SetStartDateCall__Outputs {
-    return new SetStartDateCall__Outputs(this);
-  }
-}
-
-export class SetStartDateCall__Inputs {
-  _call: SetStartDateCall;
-
-  constructor(call: SetStartDateCall) {
-    this._call = call;
+    return this._call.inputValues[1].value.toString();
   }
 
   get _startDate(): BigInt {
-    return this._call.inputValues[0].value.toBigInt();
+    return this._call.inputValues[2].value.toBigInt();
+  }
+
+  get _endDate(): BigInt {
+    return this._call.inputValues[3].value.toBigInt();
   }
 }
 
-export class SetStartDateCall__Outputs {
-  _call: SetStartDateCall;
+export class SetDetailsCall__Outputs {
+  _call: SetDetailsCall;
 
-  constructor(call: SetStartDateCall) {
+  constructor(call: SetDetailsCall) {
+    this._call = call;
+  }
+}
+
+export class SetRequirementsCall extends ethereum.Call {
+  get inputs(): SetRequirementsCall__Inputs {
+    return new SetRequirementsCall__Inputs(this);
+  }
+
+  get outputs(): SetRequirementsCall__Outputs {
+    return new SetRequirementsCall__Outputs(this);
+  }
+}
+
+export class SetRequirementsCall__Inputs {
+  _call: SetRequirementsCall;
+
+  constructor(call: SetRequirementsCall) {
+    this._call = call;
+  }
+
+  get _age(): BigInt {
+    return this._call.inputValues[0].value.toBigInt();
+  }
+
+  get _country(): string {
+    return this._call.inputValues[1].value.toString();
+  }
+
+  get _codingExp(): boolean {
+    return this._call.inputValues[2].value.toBoolean();
+  }
+}
+
+export class SetRequirementsCall__Outputs {
+  _call: SetRequirementsCall;
+
+  constructor(call: SetRequirementsCall) {
+    this._call = call;
+  }
+}
+
+export class SetUserRequirementsCall extends ethereum.Call {
+  get inputs(): SetUserRequirementsCall__Inputs {
+    return new SetUserRequirementsCall__Inputs(this);
+  }
+
+  get outputs(): SetUserRequirementsCall__Outputs {
+    return new SetUserRequirementsCall__Outputs(this);
+  }
+}
+
+export class SetUserRequirementsCall__Inputs {
+  _call: SetUserRequirementsCall;
+
+  constructor(call: SetUserRequirementsCall) {
+    this._call = call;
+  }
+
+  get _user(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+
+  get _age(): BigInt {
+    return this._call.inputValues[1].value.toBigInt();
+  }
+
+  get _country(): string {
+    return this._call.inputValues[2].value.toString();
+  }
+
+  get _codingExp(): boolean {
+    return this._call.inputValues[3].value.toBoolean();
+  }
+}
+
+export class SetUserRequirementsCall__Outputs {
+  _call: SetUserRequirementsCall;
+
+  constructor(call: SetUserRequirementsCall) {
     this._call = call;
   }
 }

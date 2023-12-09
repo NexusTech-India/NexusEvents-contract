@@ -19,6 +19,7 @@ export function handleEvntCreated(event: EvntCreatedEvent): void {
   entity.evnt = event.params._evnt
   entity.totalTickets = contract.totalSupply()
   entity.createdAt = event.block.timestamp
+
   entity.save()
 }
 

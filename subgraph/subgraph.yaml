@@ -6,7 +6,7 @@ dataSources:
     name: Manager
     network: scroll-sepolia
     source:
-      address: "0xea3d64dd66995A0341DAcFF957B0454Fdb93Ec17"
+      address: "0x1c7b99ACcFBB17891616115b8Dac5a703BD88CfD"
       abi: Manager
       startBlock: 2531316
     mapping:
@@ -35,7 +35,7 @@ dataSources:
     name: Marketplace
     network: scroll-sepolia
     source:
-      address: "0xc4CA31549916654a466BfE270540aeD9863B277d"
+      address: "0x0E15675a7648C8f8E18168dC6dFc6cAAbB7E4cEA"
       abi: Marketplace
       startBlock: 2531316
     mapping:

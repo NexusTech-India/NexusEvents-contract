@@ -19,7 +19,7 @@ contract Evnt is ERC721A {
     string public description;
     string public logo;
     Requirements public requirements;
-    address public admin = 0xD0149F17b188a8E11938E7560e4509Bc18C62383;
+    address public admin = 0x777E78C2FBB296c7dF2dfA80402531aDD1624E7d;
 
     mapping(address => Requirements) private userRequirements;
 
