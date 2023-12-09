@@ -1,49 +1,44 @@
 import {
   EvntCreated as EvntCreatedEvent,
-  EvntUpdated as EvntUpdatedEvent,
-  TicketMinted as TicketMintedEvent
-} from "../generated/Manager/Manager"
-import { EvntCreated, EvntUpdated, TicketMinted } from "../generated/schema"
+  TicketMinted as TicketMintedEvent,
+  EvntUpdated as EvntUpdatedEvent
+} from "../generated/Manager/Manager";
+import { Evnt } from "../generated/Manager/Evnt";
+import { Event, Ticket } from "../generated/schema";
 
 export function handleEvntCreated(event: EvntCreatedEvent): void {
-  let entity = new EvntCreated(
-    event.transaction.hash.concatI32(event.logIndex.toI32())
-  )
-  entity._owner = event.params._owner
-  entity._evnt = event.params._evnt
+  let entity = new Event(event.params._evnt)
 
-  entity.blockNumber = event.block.number
-  entity.blockTimestamp = event.block.timestamp
-  entity.transactionHash = event.transaction.hash
-
-  entity.save()
-}
-
-export function handleEvntUpdated(event: EvntUpdatedEvent): void {
-  let entity = new EvntUpdated(
-    event.transaction.hash.concatI32(event.logIndex.toI32())
-  )
-  entity._owner = event.params._owner
-  entity._evnt = event.params._evnt
-
-  entity.blockNumber = event.block.number
-  entity.blockTimestamp = event.block.timestamp
-  entity.transactionHash = event.transaction.hash
-
+  const contract = Evnt.bind(event.params._evnt)
+  entity.name = contract.name()
+  entity.description = contract.description()
+  entity.logo = contract.logo()
+  entity.organizer = contract.evntOrganizer()
+  entity.startDate = contract.startDate()
+  entity.endDate = contract.endDate()
+  entity.evnt = event.params._evnt
+  entity.totalTickets = contract.totalSupply()
+  entity.createdAt = event.block.timestamp
   entity.save()
 }
 
 export function handleTicketMinted(event: TicketMintedEvent): void {
-  let entity = new TicketMinted(
-    event.transaction.hash.concatI32(event.logIndex.toI32())
-  )
-  entity._owner = event.params._owner
-  entity._evnt = event.params._evnt
-  entity.quantity = event.params.quantity
+  let ev = Event.load(event.params._evnt)!
+}
 
-  entity.blockNumber = event.block.number
-  entity.blockTimestamp = event.block.timestamp
-  entity.transactionHash = event.transaction.hash
+export function handleEvntUpdated(event: EvntUpdatedEvent): void {
+  let entity = Event.load(event.params._evnt)
+  if(!entity) entity = new Event(event.params._evnt)
 
+  const contract = Evnt.bind(event.params._evnt)
+  entity.name = contract.name()
+  entity.description = contract.description()
+  entity.logo = contract.logo()
+  entity.organizer = contract.evntOrganizer()
+  entity.startDate = contract.startDate()
+  entity.endDate = contract.endDate()
+  entity.evnt = event.params._evnt
+  entity.totalTickets = contract.totalSupply()
+  entity.createdAt = event.block.timestamp
   entity.save()
 }
