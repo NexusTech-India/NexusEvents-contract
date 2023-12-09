@@ -488,7 +488,7 @@ export class MintCall__Inputs {
     return this._call.inputValues[0].value.toAddress();
   }
 
-  get quantity(): BigInt {
+  get _ticketId(): BigInt {
     return this._call.inputValues[1].value.toBigInt();
   }
 }

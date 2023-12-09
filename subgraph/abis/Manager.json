@@ -1,5 +1,9 @@
 [
-  { "inputs": [], "stateMutability": "nonpayable", "type": "constructor" },
+  {
+    "inputs": [],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
   {
     "anonymous": false,
     "inputs": [
@@ -56,7 +60,7 @@
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "quantity",
+        "name": "_ticketId",
         "type": "uint256"
       }
     ],
@@ -65,25 +69,63 @@
   },
   {
     "inputs": [
-      { "internalType": "string", "name": "_name", "type": "string" },
-      { "internalType": "string", "name": "_symbol", "type": "string" },
-      { "internalType": "string", "name": "_description", "type": "string" },
-      { "internalType": "string", "name": "_logo", "type": "string" },
-      { "internalType": "uint256", "name": "_startDate", "type": "uint256" },
-      { "internalType": "uint256", "name": "_endDate", "type": "uint256" }
+      {
+        "internalType": "string",
+        "name": "_name",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_symbol",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_description",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_logo",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_startDate",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_endDate",
+        "type": "uint256"
+      }
     ],
     "name": "createEvnt",
-    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "_event", "type": "address" }
+      {
+        "internalType": "address",
+        "name": "_event",
+        "type": "address"
+      }
     ],
     "name": "getEvent",
     "outputs": [
-      { "internalType": "contract Evnt", "name": "", "type": "address" }
+      {
+        "internalType": "contract Evnt",
+        "name": "",
+        "type": "address"
+      }
     ],
     "stateMutability": "view",
     "type": "function"
@@ -92,15 +134,27 @@
     "inputs": [],
     "name": "marketplace",
     "outputs": [
-      { "internalType": "contract Marketplace", "name": "", "type": "address" }
+      {
+        "internalType": "contract Marketplace",
+        "name": "",
+        "type": "address"
+      }
     ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "_to", "type": "address" },
-      { "internalType": "uint256", "name": "quantity", "type": "uint256" }
+      {
+        "internalType": "address",
+        "name": "_to",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_ticketId",
+        "type": "uint256"
+      }
     ],
     "name": "mintTicket",
     "outputs": [],
@@ -109,8 +163,16 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "_event", "type": "address" },
-      { "internalType": "uint256", "name": "_endDate", "type": "uint256" }
+      {
+        "internalType": "address",
+        "name": "_event",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_endDate",
+        "type": "uint256"
+      }
     ],
     "name": "setEventEndDate",
     "outputs": [],
@@ -119,8 +181,16 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "_event", "type": "address" },
-      { "internalType": "uint256", "name": "_startDate", "type": "uint256" }
+      {
+        "internalType": "address",
+        "name": "_event",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_startDate",
+        "type": "uint256"
+      }
     ],
     "name": "setEvntStartDate",
     "outputs": [],
@@ -129,7 +199,11 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "orgOwner", "type": "address" }
+      {
+        "internalType": "address",
+        "name": "orgOwner",
+        "type": "address"
+      }
     ],
     "name": "updateEvnt",
     "outputs": [],

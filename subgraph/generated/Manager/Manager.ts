@@ -75,7 +75,7 @@ export class TicketMinted__Params {
     return this._event.parameters[1].value.toAddress();
   }
 
-  get quantity(): BigInt {
+  get _ticketId(): BigInt {
     return this._event.parameters[2].value.toBigInt();
   }
 }
@@ -272,7 +272,7 @@ export class MintTicketCall__Inputs {
     return this._call.inputValues[0].value.toAddress();
   }
 
-  get quantity(): BigInt {
+  get _ticketId(): BigInt {
     return this._call.inputValues[1].value.toBigInt();
   }
 }

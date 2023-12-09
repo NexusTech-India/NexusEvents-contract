@@ -352,7 +352,7 @@
             },
             {
                 "internalType": "uint256",
-                "name": "quantity",
+                "name": "_ticketId",
                 "type": "uint256"
             }
         ],
