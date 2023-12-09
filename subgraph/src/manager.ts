@@ -20,6 +20,12 @@ export function handleEvntCreated(event: EvntCreatedEvent): void {
   entity.totalTickets = contract.totalSupply()
   entity.createdAt = event.block.timestamp
 
+  entity.isCoder = contract.requirements.call("codingExp")
+  let age = contract.requirements.call("age")
+
+  if(age === 0)entity.age = "Below18"
+  else if(age === 1)entity.age = "Above18"
+
   entity.save()
 }
 

@@ -178,6 +178,32 @@ export class Event extends Entity {
       "tickets"
     );
   }
+
+  get isCoder(): boolean {
+    let value = this.get("isCoder");
+    if (!value || value.kind == ValueKind.NULL) {
+      return false;
+    } else {
+      return value.toBoolean();
+    }
+  }
+
+  set isCoder(value: boolean) {
+    this.set("isCoder", Value.fromBoolean(value));
+  }
+
+  get age(): string {
+    let value = this.get("age");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toString();
+    }
+  }
+
+  set age(value: string) {
+    this.set("age", Value.fromString(value));
+  }
 }
 
 export class Ticket extends Entity {
