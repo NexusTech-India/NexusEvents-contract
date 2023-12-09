@@ -1,31 +1,52 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.20;
 
-contract Lock {
-    uint public unlockTime;
-    address payable public owner;
+import "./Evnt.sol";
 
-    event Withdrawal(uint amount, uint when);
+contract EvntsManager {
+    mapping(address => Evnt) private evnts;
 
-    constructor(uint _unlockTime) payable {
-        require(
-            block.timestamp < _unlockTime,
-            "Unlock time should be in the future"
+    event EvntCreated(address indexed _owner, address _evnt);
+    event EvntUpdated(address indexed _owner, address _evnt);
+
+    function createEvnt(
+        string memory _name,
+        string memory _symbol,
+        string memory _description,
+        string memory _logo,
+        uint256 _startDate,
+        uint256 _endDate
+    ) public returns (address) {
+        Evnt newEvnt = new Evnt(
+//            address(this),
+            _name,
+            _symbol,
+            _description,
+            _logo,
+            msg.sender,
+            _startDate,
+            _endDate
         );
+        evnts[address(newEvnt)] = newEvnt;
 
-        unlockTime = _unlockTime;
-        owner = payable(msg.sender);
+        emit EvntCreated(msg.sender, address(newEvnt));
+
+        return address(newEvnt);
     }
 
-    function withdraw() public {
-        // Uncomment this line, and the import of "hardhat/console.sol", to print a log in your terminal
-        // console.log("Unlock time is %o and block timestamp is %o", unlockTime, block.timestamp);
+    function getEvent(address _event) public view returns (Evnt) {
+        return evnts[_event];
+    }
 
-        require(block.timestamp >= unlockTime, "You can't withdraw yet");
-        require(msg.sender == owner, "You aren't the owner");
+    modifier onlyEvnt() {
+        require(
+            evnts[msg.sender] != Evnt(address(0)),
+            "Only evnt can call this function"
+        );
+        _;
+    }
 
-        emit Withdrawal(address(this).balance, block.timestamp);
-
-        owner.transfer(address(this).balance);
+    function updateEvnt(address orgOwner) public onlyEvnt {
+        emit EvntUpdated(orgOwner, msg.sender);
     }
 }

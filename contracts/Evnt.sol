@@ -4,6 +4,7 @@ pragma solidity ^0.8.20;
 import "@thirdweb-dev/contracts/eip/ERC721A.sol";
 
 contract Evnt is ERC721A {
+    address public manager;
     string public contractURI;
     address public evntOrganizer;
     uint256 public startDate;
@@ -12,6 +13,7 @@ contract Evnt is ERC721A {
     string public logo;
 
     constructor(
+        address _manager,
         string memory _name,
         string memory _symbol,
         string memory _description,
@@ -20,6 +22,7 @@ contract Evnt is ERC721A {
         uint256 _startDate,
         uint256 _endDate
     ) ERC721A(_name, _symbol) {
+        manager = _manager;
         evntOrganizer = _evntOrganizer;
         startDate = _startDate;
         endDate = _endDate;
