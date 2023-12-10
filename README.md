@@ -1,13 +1,7 @@
-# Sample Hardhat Project
+Deployed the contract to :
+1. 0x1c7b99ACcFBB17891616115b8Dac5a703BD88CfD
+2. 0x0E15675a7648C8f8E18168dC6dFc6cAAbB7E4cEA
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a script that deploys that contract.
+Scroll sepolia testnet scan - https://sepolia.scrollscan.com/address/0x1c7b99ACcFBB17891616115b8Dac5a703BD88CfD#code
 
-Try running some of the following tasks:
-
-```shell
-npx hardhat help
-npx hardhat test
-REPORT_GAS=true npx hardhat test
-npx hardhat node
-npx hardhat run scripts/deploy.ts
-```
+https://sepolia.scrollscan.com/address/0x0E15675a7648C8f8E18168dC6dFc6cAAbB7E4cEA#code
